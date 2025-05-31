@@ -23,12 +23,8 @@
     .container { flex: 1; max-width: 1000px; margin: auto; padding: 1rem; }
     .search-bar { margin-bottom: 1rem; text-align: center; }
     .search-bar form { display: inline-block; width: 100%; max-width: 800px; }
-    .search-bar input { padding: .5rem; font-size: 1rem; width: 70%; border: none; border-radius: 4px 0 0 4px; }
+    .search-bar input { padding: .5rem; font-size: 1rem; width: 80%; border: none; border-radius: 4px 0 0 4px; }
     .search-bar button { padding: .5rem 1rem; font-size: 1rem; border: none; border-radius: 0 4px 4px 0; background: #0bf; color: #111; cursor: pointer; }
-
-    /* タグ一覧（モバイル用） */
-    .mobile-tags { display: none; margin-bottom: 1rem; overflow-x: auto; padding: .5rem 0; }
-    .mobile-tags .tag { flex: 0 0 auto; margin-right: .5rem; }
 
     .selected-tags { margin: .5rem 0 1rem; }
     .selected-tags span { display: inline-block; background: #0bf; color: #111; padding: 2px 8px; margin: 0 5px 5px 0; border-radius: 4px; font-size: .8rem; }
@@ -58,22 +54,19 @@
     #passwordOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; }
     #passwordOverlay input, #passwordOverlay button { width: 220px; }
 
-    /* Responsive */
+    /* Mobile Responsive */
     @media (max-width: 768px) {
       header { flex-direction: column; gap: .5rem; }
       header nav { flex-wrap: wrap; justify-content: center; }
       .main-content { flex-direction: column; }
       .sidebar { display: none; }
-      .mobile-tags { display: flex; }
-      .container { padding: .5rem; }
-      .search-bar input { width: 60%; }
+      .search-bar input { width: 70%; }
       .video-grid { grid-template-columns: 1fr; }
       .pagination { margin-top: 1rem; }
     }
   </style>
 </head>
 <body>
-  <!-- パスワード入力オーバーレイ -->
   <div id="passwordOverlay">
     <h2>管理者ログイン</h2>
     <input type="password" id="passwordInput" placeholder="パスワードを入力">
@@ -103,8 +96,6 @@
           <button type="button">検索</button>
         </form>
       </div>
-      <!-- モバイル時に表示するタグリスト -->
-      <div class="mobile-tags" id="mobileTagList"></div>
       <div id="selectedTags" class="selected-tags"></div>
       <div class="video-grid" id="videoGrid"></div>
       <div class="pagination">
@@ -114,22 +105,11 @@
       </div>
     </div>
   </div>
-
   <div class="modal" id="modal" onclick="closeModal()">
     <iframe id="modalVideo" src="" frameborder="0" allowfullscreen></iframe>
   </div>
-
 <script>
 // (JavaScript unchanged)
-// 追加: モバイル用タグ表示同期
-function renderTags() {
-  const tags = [...new Set(videoData.flatMap(v => v.tags))].sort();
-  const html = tags.map(tag =>
-    `<span class=\"tag ${selectedTags.includes(tag) ? 'active' : ''}\" onclick=\"toggleTag('${tag}')\">${tag}</span>`
-  ).join('');
-  document.getElementById('tagList').innerHTML = html;
-  document.getElementById('mobileTagList').innerHTML = html;
-}
 </script>
 </body>
 </html>
