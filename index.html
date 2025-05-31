@@ -64,8 +64,8 @@
       header { flex-direction: column; gap: .5rem; }
       header nav { flex-wrap: wrap; justify-content: center; }
       .main-content { flex-direction: column; }
-      .sidebar { display: none; }
-      .mobile-tags { display: flex; }
+      .sidebar { display: block; width: 100%; }
+      .mobile-tags { display: none; }
       .search-bar input { width: 70%; }
       .video-grid { grid-template-columns: 1fr; }
       .pagination { margin-top: 1rem; }
@@ -102,8 +102,6 @@
           <button type="button">検索</button>
         </form>
       </div>
-      <!-- モバイル用タグリスト -->
-      <div class="mobile-tags" id="mobileTagList"></div>
       <div id="selectedTags" class="selected-tags"></div>
       <div class="video-grid" id="videoGrid"></div>
       <div class="pagination">
@@ -124,7 +122,6 @@ function renderTags() {
     `<span class="tag ${selectedTags.includes(tag) ? 'active' : ''}" onclick="toggleTag('${tag}')">${tag}</span>`
   ).join('');
   document.getElementById('tagList').innerHTML = html;
-  document.getElementById('mobileTagList').innerHTML = html;
 }
 </script>
 </body>
