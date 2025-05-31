@@ -160,7 +160,7 @@ let selectedTags = [];
 
 document.addEventListener('DOMContentLoaded', initGallery);
 function initGallery() {
-  fetch('videos.json', { cache: 'no-store' })
+  fetch('/videos.json', { cache: 'no-store' })
     .then(r => r.json())
     .then(json => {
       videoData = json.map(v => ({ ...v, video: `https://www.xvideos.com/embedframe/${v.id}` }));
