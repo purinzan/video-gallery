@@ -26,6 +26,11 @@
     .search-bar input { padding: .5rem; font-size: 1rem; width: 80%; border: none; border-radius: 4px 0 0 4px; }
     .search-bar button { padding: .5rem 1rem; font-size: 1rem; border: none; border-radius: 0 4px 4px 0; background: #0bf; color: #111; cursor: pointer; }
 
+    /* モバイル用タグリスト */
+    .mobile-tags { display: none; margin-bottom: 1rem; overflow-x: auto; padding-bottom: .5rem; }
+    .mobile-tags .tag { display: inline-block; padding: .25rem .5rem; margin-right: .5rem; background: #333; border-radius: 4px; color: #fff; cursor: pointer; white-space: nowrap; }
+    .mobile-tags .tag.active { background: #0bf; color: #111; }
+
     .selected-tags { margin: .5rem 0 1rem; }
     .selected-tags span { display: inline-block; background: #0bf; color: #111; padding: 2px 8px; margin: 0 5px 5px 0; border-radius: 4px; font-size: .8rem; }
 
@@ -60,6 +65,7 @@
       header nav { flex-wrap: wrap; justify-content: center; }
       .main-content { flex-direction: column; }
       .sidebar { display: none; }
+      .mobile-tags { display: flex; }
       .search-bar input { width: 70%; }
       .video-grid { grid-template-columns: 1fr; }
       .pagination { margin-top: 1rem; }
@@ -96,6 +102,8 @@
           <button type="button">検索</button>
         </form>
       </div>
+      <!-- モバイル用タグリスト -->
+      <div class="mobile-tags" id="mobileTagList"></div>
       <div id="selectedTags" class="selected-tags"></div>
       <div class="video-grid" id="videoGrid"></div>
       <div class="pagination">
@@ -110,6 +118,14 @@
   </div>
 <script>
 // (JavaScript unchanged)
+function renderTags() {
+  const tags = [...new Set(videoData.flatMap(v => v.tags))].sort();
+  const html = tags.map(tag =>
+    `<span class="tag ${selectedTags.includes(tag) ? 'active' : ''}" onclick="toggleTag('${tag}')">${tag}</span>`
+  ).join('');
+  document.getElementById('tagList').innerHTML = html;
+  document.getElementById('mobileTagList').innerHTML = html;
+}
 </script>
 </body>
 </html>
