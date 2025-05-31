@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -55,7 +56,7 @@
     .pagination button { padding: .5rem 1rem; background: #333; color: #fff; border: none; margin: 0 5px; border-radius: 4px; cursor: pointer; }
     .pagination span { margin: 0 10px; font-size: .9rem; color: #ccc; }
 
-    .modal { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: none; justify-content: center; align-items: center; }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: none; justify-content: center; align-items: center; z-index: 1000;}
     .modal iframe { width: 90%; height: 90vh; max-width: 960px; }
 
 
@@ -170,7 +171,13 @@ function initGallery() {
   fetch('videos.json')
     .then(r => r.json())
     .then(json => {
-      videoData = json.map(v => ({ ...v, video: `https://www.xvideos.com/embedframe/${v.id}` }));
+      videoData = json.map(v => ({
+       ...v,
+  // JSONに `video` フィールドがあればそれを優先して使い、なければ xvideos 埋め込みURLをデフォルトとする
+        video: v.video
+        ? v.video
+        : `https://www.xvideos.com/embedframe/${v.id}`
+      }));
       renderTags();
       renderVideos();
     })
